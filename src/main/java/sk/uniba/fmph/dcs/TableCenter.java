@@ -1,8 +1,10 @@
 package sk.uniba.fmph.dcs;
 
+import sk.uniba.fmph.dcs.interfaces.TileSourceInterface;
+
 import java.util.ArrayList;
 
-public class TableCenter implements TileSource{
+public class TableCenter implements TileSourceInterface {
     private ArrayList<Tile> tiles;
     private boolean isFirst;
 
@@ -44,11 +46,11 @@ public class TableCenter implements TileSource{
     }
 
     @Override
-    public String State() {
-        String toReturn = "";
+    public String state() {
+        StringBuilder toReturn = new StringBuilder();
         for (final Tile tile : tiles) {
-            toReturn += tile.toString();
+            toReturn.append(tile.toString());
         }
-        return toReturn;
+        return toReturn.toString();
     }
 }

@@ -1,5 +1,8 @@
 package sk.uniba.fmph.dcs;
 
+import sk.uniba.fmph.dcs.interfaces.FloorInterface;
+import sk.uniba.fmph.dcs.interfaces.UsedTilesGiveInterface;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,6 +16,7 @@ public final class Floor {
     this.pointPattern = pointPattern;
     tiles = new ArrayList<Tile>();
   }
+
 
   public void put(final Collection<Tile> tiles) {
     this.tiles.addAll(tiles);

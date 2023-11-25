@@ -1,20 +1,26 @@
 package sk.uniba.fmph.dcs;
 
+import sk.uniba.fmph.dcs.interfaces.TableAreaInterface;
+import sk.uniba.fmph.dcs.interfaces.TileSourceInterface;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public class TableArea {
-    ArrayList<TileSource> tileSources;
+public class TableArea implements TableAreaInterface {
+    List<TileSourceInterface> tileSources;
 
-    public TableArea(ArrayList<TileSource> tileSources) {
+    public TableArea(ArrayList<TileSourceInterface> tileSources) {
         this.tileSources = tileSources;
     }
 
-    ArrayList<Tile> take(int sourceIdx, int idx) {
+    @Override
+    public List<Tile> take(int sourceIdx, int idx) {
         return tileSources.get(sourceIdx).take(idx);
     }
 
-    boolean isRoundEnd() {
-        for (TileSource tileSource : tileSources) {
+    @Override
+    public boolean isRoundEnd() {
+        for (TileSourceInterface tileSource : tileSources) {
             if (!tileSource.isEmpty()) {
                 return false;
             }
@@ -22,17 +28,19 @@ public class TableArea {
         return true;
     }
 
-    void startNewRound() {
-        for (TileSource tileSource : tileSources) {
+    @Override
+    public void startNewRound() {
+        for (TileSourceInterface tileSource : tileSources) {
             tileSource.startNewRound();
         }
     }
 
-    public String State() {
-        String toReturn = "";
-        for (final TileSource tileSource : tileSources) {
-            toReturn += tileSource.toString();
+    @Override
+    public String state() {
+        StringBuilder toReturn = new StringBuilder();
+        for (final TileSourceInterface tileSource : tileSources) {
+            toReturn.append(tileSource.toString());
         }
-        return toReturn;
+        return toReturn.toString();
     }
 }

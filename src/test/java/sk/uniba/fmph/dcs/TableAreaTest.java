@@ -2,16 +2,18 @@ package sk.uniba.fmph.dcs;
 
 import org.junit.Before;
 import org.junit.Test;
+import sk.uniba.fmph.dcs.interfaces.BagInterface;
+import sk.uniba.fmph.dcs.interfaces.TileSourceInterface;
 
 import java.util.*;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-class FakeBag implements BagInterface {
+class FakeBag2 implements BagInterface {
   ArrayList<Tile> tiles;
 
-  public FakeBag(){
+  public FakeBag2(){
     tiles = new ArrayList<>();
       for (int i = 0; i < 100; i++) {
         tiles.add(Tile.RED);
@@ -19,7 +21,7 @@ class FakeBag implements BagInterface {
   }
 
   @Override
-  public ArrayList<Tile> take(int count) {
+  public List<Tile> take(int count) {
     ArrayList<Tile> takenTiles = new ArrayList<>();
     for (int i = 0; i < count; i++) {
       takenTiles.add(tiles.remove(0));
@@ -33,13 +35,13 @@ class FakeBag implements BagInterface {
   }
 }
 
-class FakeFactory implements TileSource{
-  FakeBag bag;
+class FakeFactory implements TileSourceInterface {
+  FakeBag2 bag;
   TableCenter tableCenter;
   ArrayList<Tile> tiles;
   int factorySize;
 
-  FakeFactory(TableCenter tableCenter, FakeBag bag){
+  FakeFactory(TableCenter tableCenter, FakeBag2 bag){
     this.bag = bag;
     this.tableCenter = tableCenter;
     tiles = new ArrayList<>();
@@ -73,7 +75,7 @@ class FakeFactory implements TileSource{
   }
 
   @Override
-  public String State() {
+  public String state() {
     String toReturn = "";
     for (final Tile tile : tiles) {
       toReturn += tile.toString();
@@ -83,15 +85,15 @@ class FakeFactory implements TileSource{
 }
 
 public class TableAreaTest {
-  private FakeBag bag;
-  private ArrayList<TileSource> tileSources;
+  private FakeBag2 bag;
+  private ArrayList<TileSourceInterface> tileSources;
   private int playerCount;
   private TableCenter tableCenter;
 
   @Before
   public void setUp() {
     playerCount = 4;
-    bag = new FakeBag();
+    bag = new FakeBag2();
     tileSources = new ArrayList<>();
     tableCenter = new TableCenter();
     tileSources.add(tableCenter);

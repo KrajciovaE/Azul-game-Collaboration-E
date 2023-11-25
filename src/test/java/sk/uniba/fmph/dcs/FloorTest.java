@@ -9,6 +9,7 @@ import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
+import sk.uniba.fmph.dcs.interfaces.UsedTilesGiveInterface;
 
 class FakeUsedTiles implements UsedTilesGiveInterface {
   public ArrayList<Tile> tiles;
