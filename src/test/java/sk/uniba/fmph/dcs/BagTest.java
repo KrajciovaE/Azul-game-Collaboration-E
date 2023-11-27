@@ -30,7 +30,7 @@ public class BagTest {
     List<Tile> fakeFactory;
 
     @Before
-    public void setU() {
+    public void setUp() {
         fakeUsedTiles = new FakeUsedTilesTake();
         fakeFactory = new ArrayList<>();
 

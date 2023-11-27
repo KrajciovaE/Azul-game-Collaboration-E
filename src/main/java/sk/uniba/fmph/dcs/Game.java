@@ -6,25 +6,27 @@ import java.util.List;
 import java.util.Random;
 
 public class Game implements GameInterface {
-    private List<BoardInterface> allBoards;
     private TableAreaInterface tableArea;
-    private List<BoardInterface> playerBoards;
-    private int currentPlayerId;
-    private int playerCount;
+    private List<BoardInterface> allBoards;
     private ObserverInterface gameObserver;
+    private int playerCount;
+    private int currentPlayerId;
+    private int startingPlayerId;
     boolean isGameOver;
 
-    public Game(List<BoardInterface> allBoards,  TableAreaInterface tableArea, int playerCount, ObserverInterface gameObserver) {
+    public Game(TableAreaInterface tableArea, List<BoardInterface> allBoards, ObserverInterface gameObserver, int playerCount) {
 
-        this.allBoards = allBoards;
         this.tableArea = tableArea;
-        this.playerCount = playerCount;
+        this.allBoards = allBoards;
         this.gameObserver = gameObserver;
+        this.playerCount = playerCount;
         this.isGameOver = false;
         Random random = new Random();
-        currentPlayerId = random.nextInt(this.playerCount);
+        startingPlayerId = random.nextInt(this.playerCount);
+        currentPlayerId = startingPlayerId;
+        this.tableArea.startNewRound();
         gameObserver.notify("Game started");
-        gameObserver.notify("Player " + currentPlayerId + " starts");
+        gameObserver.notify("Player " + startingPlayerId + " starts");
     }
 
     @Override
@@ -37,13 +39,17 @@ public class Game implements GameInterface {
         if ( playerId != currentPlayerId ) return false;
         List<Tile> tiles = tableArea.take(sourceId, idx);
         if ( tiles.isEmpty() ) return false;
+        if(tiles.contains(Tile.STARTING_PLAYER)) startingPlayerId = currentPlayerId;
 
         allBoards.get(playerId).put(destinationIdx, tiles);
         if ( tableArea.isRoundEnd() ) {
             handleRoundEnd();
             if ( isGameOver ) return finish();
+            gameObserver.notify("Player " + startingPlayerId + " starts");
+        } else {
+            currentPlayerId = ( currentPlayerId + 1 ) % playerCount;
+            gameObserver.notify("Player " + currentPlayerId + " has a turn.");
         }
-        currentPlayerId = ( currentPlayerId + 1 ) % playerCount;
         return true;
     }
 
@@ -83,5 +89,9 @@ public class Game implements GameInterface {
         }
         gameObserver.notify("Player " + winnerPlayerId + " won with " + maxPoints + " points.");
         return true;
+    }
+
+    public int getCurrentPlayerId() {
+        return this.currentPlayerId;
     }
 }

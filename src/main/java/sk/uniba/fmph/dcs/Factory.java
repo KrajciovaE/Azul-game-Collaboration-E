@@ -20,6 +20,8 @@ public class Factory implements TileSourceInterface {
 
     @Override
     public List<Tile> take(int idx) {
+        if ( this.tiles.isEmpty() ) throw new IllegalArgumentException();
+
         List<Tile> result = new ArrayList<>();
         List<Tile> toTable = new ArrayList<>();
 

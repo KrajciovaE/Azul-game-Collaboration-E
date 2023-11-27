@@ -65,6 +65,9 @@ public class PatternLine implements PatternLineInterface {
         for (Tile tile : tiles) {
             result.append(tile);
         }
+        for (int i = 0; i < capacity - tiles.size(); i++) {
+            result.append(".");
+        }
         return result.toString();
     }
 }

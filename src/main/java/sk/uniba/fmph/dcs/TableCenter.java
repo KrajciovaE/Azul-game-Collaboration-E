@@ -40,7 +40,7 @@ public class TableCenter implements TileSourceInterface {
 
     @Override
     public void startNewRound() {
-        tiles = new ArrayList<Tile>();
+        tiles = new ArrayList<>();
         isFirst = true;
         tiles.add(Tile.STARTING_PLAYER);
     }

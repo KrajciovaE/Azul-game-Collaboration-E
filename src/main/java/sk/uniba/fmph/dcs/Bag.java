@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Bag implements TileSourceInterface {
+public class Bag implements BagInterface {
     List<Tile> tiles = new ArrayList<>();
     UsedTilesTakeInterface usedTiles;
     public Bag(UsedTilesTakeInterface usedTiles){
@@ -42,12 +42,10 @@ public class Bag implements TileSourceInterface {
         return result;
     }
 
-    @Override
     public boolean isEmpty() {
         return tiles.size() == 0;
     }
 
-    @Override
     public void startNewRound() {
         tiles.addAll(usedTiles.takeAll());
     }

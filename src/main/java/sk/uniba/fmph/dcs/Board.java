@@ -7,12 +7,15 @@ import java.util.stream.Collectors;
 
 public class Board implements BoardInterface {
     private final Floor floor;
-    private final Points points;
+    private final ArrayList<Points> points;
     private final List<PatternLineInterface> patternLines;
     private final List<WallLineInterface> wallLines;
+    private final FinalPointsCalculationInterface finalPointsCalculation;
+    private final GameFinishedInterface gameFinished;
 
-    public Board(Floor floor, Points points, List<PatternLineInterface> patternLines, List<WallLineInterface> wallLines) {
-
+    public Board(Floor floor, ArrayList<Points> points, List<PatternLineInterface> patternLines, List<WallLineInterface> wallLines, FinalPointsCalculationInterface finalPointsCalculation, GameFinishedInterface gameFinishedInterface) {
+        this.finalPointsCalculation = finalPointsCalculation;
+        this.gameFinished = gameFinishedInterface;
         this.floor = floor;
         this.points = points;
         this.patternLines = patternLines;
@@ -44,7 +47,6 @@ public class Board implements BoardInterface {
         patternLines.get(destinationIndex).put(tiles);
     }
 
-    @Override
     public FinishRoundResult finishRound() {
 
         for (PatternLineInterface patternLine : patternLines) {
@@ -58,7 +60,7 @@ public class Board implements BoardInterface {
                 .map(WallLineInterface::getTiles) // Convert each WallLineInterface to List<Optional<Tile>>
                 .collect(Collectors.toList());
 
-        FinishRoundResult result = GameFinishedInterface.gameFinished(wallTiles);
+        FinishRoundResult result = gameFinished.gameFinished(wallTiles);
         if (result == FinishRoundResult.GAME_FINISHED) endGame();
         return result;
     }
@@ -97,13 +99,13 @@ public class Board implements BoardInterface {
         stateBuilder.append(floor.state()).append("\n");
 
         // Append current points
-        stateBuilder.append(points.toString()).append("\n");
+        stateBuilder.append(this.getPoints().toString()).append("\n");
 
         return stateBuilder.toString();
     }
 
     @Override
     public Points getPoints(){
-        return this.points;
+        return Points.sum(points);
     }
 }
