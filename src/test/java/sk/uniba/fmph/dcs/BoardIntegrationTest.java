@@ -15,10 +15,6 @@ import static org.junit.Assert.assertEquals;
 public class BoardIntegrationTest {
 
     private Board board;
-    private Floor floor;
-    private ArrayList<Points> points;
-    private List<PatternLineInterface> patternLines;
-    private List<WallLineInterface> wallLines;
 
     @Before
     public void setUp() {
@@ -26,8 +22,8 @@ public class BoardIntegrationTest {
         UsedTiles usedTiles = new UsedTiles();
         ArrayList<Points> pointPattern = new ArrayList<>(Arrays.asList(new Points(-1), new Points(-1), new Points(-2), new Points(-2), new Points(-2), new Points(-3), new Points(-3)));
 
-        floor = new Floor(usedTiles, pointPattern);
-        points = new ArrayList<>();
+        Floor floor = new Floor(usedTiles, pointPattern);
+        ArrayList<Points> points = new ArrayList<>();
 
         // Wall lines.
         LinkedList<Tile> tileTypes1 = new LinkedList<>(Arrays.asList(Tile.BLUE, Tile.YELLOW, Tile.RED, Tile.GREEN, Tile.BLACK));
@@ -51,10 +47,10 @@ public class BoardIntegrationTest {
         wallLine3.setLineUp(wallLine2);
         wallLine2.setLineUp(wallLine1);
 
-        wallLines = Arrays.asList(wallLine1, wallLine2, wallLine3, wallLine4, wallLine5);
+        List<WallLineInterface> wallLines = Arrays.asList(wallLine1, wallLine2, wallLine3, wallLine4, wallLine5);
 
         // Pattern lines.
-        patternLines = Arrays.asList(new PatternLine(1, floor, usedTiles, wallLine1), new PatternLine(2, floor, usedTiles, wallLine2), new PatternLine(3, floor, usedTiles, wallLine3), new PatternLine(4, floor, usedTiles, wallLine4), new PatternLine(5, floor, usedTiles, wallLine5));
+        List<PatternLineInterface> patternLines = Arrays.asList(new PatternLine(1, floor, usedTiles, wallLine1), new PatternLine(2, floor, usedTiles, wallLine2), new PatternLine(3, floor, usedTiles, wallLine3), new PatternLine(4, floor, usedTiles, wallLine4), new PatternLine(5, floor, usedTiles, wallLine5));
 
         // Board.
         FinalPointsCalculation finalPointsCalculation = new FinalPointsCalculation();
@@ -70,7 +66,7 @@ public class BoardIntegrationTest {
         board.put(1, new ArrayList<>(Arrays.asList(Tile.BLACK, Tile.BLACK)));
         board.put(2, new ArrayList<>(Arrays.asList(Tile.GREEN, Tile.GREEN, Tile.GREEN)));
         board.put(3, new ArrayList<>(Arrays.asList(Tile.RED, Tile.RED, Tile.RED, Tile.RED)));
-        board.put(4, new ArrayList<>(Arrays.asList(Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE)));
+        board.put(4, new ArrayList<>(Arrays.asList(Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE)));
 
         String expectedState = """
                 Pattern Lines:
@@ -78,7 +74,7 @@ public class BoardIntegrationTest {
                 LL
                 GGG
                 RRRR
-                BBBBB
+                BBBB.
                 Wall Lines:
                 .....
                 .....
@@ -99,16 +95,16 @@ public class BoardIntegrationTest {
                 ..
                 ...
                 ....
-                .....             
+                BBBB.
                 Wall Lines:
                 .I...
                 L....
                 G....
                 R....
-                ....B
+                .....
                 Floor:
                                 
-                Points[value=7]
+                Points[value=6]
                 """;
         assertEquals(expectedState, board.state());
 
@@ -117,7 +113,7 @@ public class BoardIntegrationTest {
         board.put(1, new ArrayList<>(Arrays.asList(Tile.BLUE, Tile.BLUE)));
         board.put(2, new ArrayList<>(Arrays.asList(Tile.BLACK, Tile.BLACK, Tile.BLACK)));
         board.put(3, new ArrayList<>(Arrays.asList(Tile.YELLOW, Tile.YELLOW, Tile.YELLOW, Tile.YELLOW)));
-        board.put(4, new ArrayList<>(Arrays.asList(Tile.RED, Tile.RED, Tile.RED, Tile.RED, Tile.RED)));
+        board.put(4, new ArrayList<>(Arrays.asList(Tile.BLUE)));
 
         expectedState = """
                 Pattern Lines:
@@ -125,16 +121,16 @@ public class BoardIntegrationTest {
                 BB
                 LLL
                 IIII
-                RRRRR
+                BBBBB
                 Wall Lines:
                 .I...
                 L....
                 G....
                 R....
-                ....B
+                .....
                 Floor:
                                 
-                Points[value=7]
+                Points[value=6]
                 """;
         assertEquals(expectedState, board.state());
 
@@ -152,10 +148,10 @@ public class BoardIntegrationTest {
                 LB...
                 GL...
                 R...I
-                .R..B
+                ....B
                 Floor:
                                 
-                Points[value=19]
+                Points[value=18]
                 """;
         assertEquals(expectedState, board.state());
 
@@ -163,13 +159,13 @@ public class BoardIntegrationTest {
         board.put(0, new ArrayList<>(List.of(Tile.GREEN)));
 
         assertEquals(FinishRoundResult.NORMAL, board.finishRound());
-        assertEquals(22, board.getPoints().getValue());
+        assertEquals(21, board.getPoints().getValue());
 
         // Round 4.
         board.put(0, new ArrayList<>(List.of(Tile.BLACK)));
 
         assertEquals(FinishRoundResult.NORMAL, board.finishRound());
-        assertEquals(26, board.getPoints().getValue());
+        assertEquals(25, board.getPoints().getValue());
 
         // Round 5.
         board.put(0, new ArrayList<>(List.of(Tile.BLUE)));
@@ -189,10 +185,10 @@ public class BoardIntegrationTest {
                 LB...
                 GL...
                 R...I
-                .R..B
+                ....B
                 Floor:
                                 
-                Points[value=36]
+                Points[value=35]
                 """;
         assertEquals(expectedState, board.state());
     }

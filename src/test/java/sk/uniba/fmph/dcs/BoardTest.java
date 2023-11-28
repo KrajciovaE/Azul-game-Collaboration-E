@@ -76,6 +76,16 @@ class FakeWallLine implements WallLineInterface {
     public String state() {
         return ".....";
     }
+
+    @Override
+    public void setLineUp(WallLineInterface lineUp) {
+
+    }
+
+    @Override
+    public void setLineDown(WallLineInterface lineDown) {
+
+    }
 }
 
 class FakeFinalPointsCal implements FinalPointsCalculationInterface {

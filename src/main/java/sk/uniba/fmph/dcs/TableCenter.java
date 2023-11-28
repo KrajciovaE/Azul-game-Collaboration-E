@@ -11,7 +11,7 @@ public class TableCenter implements TableCenterInterface {
     private boolean isFirst;
 
     public TableCenter() {
-        tiles = new ArrayList<Tile>();
+        tiles = new ArrayList();
         isFirst = true;
     }
 
@@ -38,7 +38,7 @@ public class TableCenter implements TableCenterInterface {
 
     @Override
     public boolean isEmpty() {
-        return tiles.isEmpty();
+        return tiles.size() == 0;
     }
 
     @Override

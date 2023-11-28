@@ -54,7 +54,11 @@ public class Board implements BoardInterface {
             points.add(patternLine.finishRound());
         }
 
-        points.add(floor.finishRound());
+        Points fPoints = floor.finishRound();
+        if (getPoints().getValue() + fPoints.getValue() < 0) {
+            points.clear();
+            points.add(new Points(0));
+        } else points.add(fPoints);
 
         List<List<Optional<Tile>>> wallTiles = wallLines.stream()
                 .map(WallLineInterface::getTiles) // Convert each WallLineInterface to List<Optional<Tile>>
@@ -107,5 +111,9 @@ public class Board implements BoardInterface {
     @Override
     public Points getPoints(){
         return Points.sum(points);
+    }
+
+    public List<WallLineInterface> getWall() {
+        return this.wallLines;
     }
 }

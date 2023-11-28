@@ -31,6 +31,7 @@ public class Bag implements BagInterface {
     }
     @Override
     public List<Tile> take(int count) {
+        if (this.isEmpty()) startNewRound();
 
         List<Tile> result = new ArrayList<>();
         for (int i = 0; i < count; i++){
@@ -57,5 +58,22 @@ public class Bag implements BagInterface {
             result.append(tile.toString());
         }
         return result.toString();
+    }
+
+    private void refill() {
+
+        for (int i = 0; i < 100; i++){
+            if (i < 20){
+                this.tiles.add(Tile.RED);
+            } else if (i < 40) {
+                this.tiles.add(Tile.BLUE);
+            } else if (i < 60) {
+                this.tiles.add(Tile.GREEN);
+            } else if (i < 80) {
+                this.tiles.add(Tile.BLACK);
+            } else this.tiles.add(Tile.YELLOW);
+        }
+
+        Collections.shuffle(tiles);
     }
 }

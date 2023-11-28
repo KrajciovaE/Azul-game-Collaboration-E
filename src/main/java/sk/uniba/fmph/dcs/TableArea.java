@@ -33,6 +33,7 @@ public class TableArea implements TableAreaInterface {
         for (TileSourceInterface tileSource : tileSources) {
             tileSource.startNewRound();
         }
+
     }
 
     @Override

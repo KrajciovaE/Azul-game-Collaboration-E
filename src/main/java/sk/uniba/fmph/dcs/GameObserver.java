@@ -5,7 +5,7 @@ import sk.uniba.fmph.dcs.interfaces.ObserverInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameObserver {
+public class GameObserver implements ObserverInterface {
   private List<ObserverInterface> observers;
 
   public GameObserver() {
@@ -26,7 +26,8 @@ public class GameObserver {
     observers.remove(observer);
   }
 
-  public void notifyEverybody(String state) {
+  @Override
+  public void notify(String state) {
 
     for (ObserverInterface observer : observers) {
 
