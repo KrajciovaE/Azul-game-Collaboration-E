@@ -34,7 +34,7 @@ public class PatternLineTest {
     public void testPatternLine() {
         List<Tile> tiles1 = Arrays.asList(Tile.BLUE, Tile.BLUE);
         patternLine.put(tiles1);
-        assertEquals("BB", patternLine.state());
+        assertEquals("BB...", patternLine.state());
         assertEquals(0, patternLine.finishRound().getValue());
         List<Tile> tiles2 = Arrays.asList(Tile.RED, Tile.RED);
         patternLine.put(tiles2);

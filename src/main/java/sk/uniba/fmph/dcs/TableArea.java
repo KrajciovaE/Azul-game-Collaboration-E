@@ -37,10 +37,14 @@ public class TableArea implements TableAreaInterface {
 
     @Override
     public String state() {
-        StringBuilder toReturn = new StringBuilder();
+        String toReturn = "";
+        int counter = 0;
         for (final TileSourceInterface tileSource : tileSources) {
-            toReturn.append(tileSource.toString());
+            if (counter == 0) toReturn += "Table center: ";
+            else toReturn += "Factory " + counter + ": ";
+            toReturn += tileSource.state() + "\n";
+            counter++;
         }
-        return toReturn.toString();
+        return toReturn;
     }
 }

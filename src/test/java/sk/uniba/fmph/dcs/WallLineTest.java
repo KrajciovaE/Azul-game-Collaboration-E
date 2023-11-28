@@ -114,10 +114,10 @@ public class WallLineTest {
   }
   @Test
   public void testState(){
-    assertEquals("WallLine should be empty when created.", "", wallLine.state());
+    assertEquals("WallLine should be empty when created.", ".....", wallLine.state());
     wallLine.putTile(Tile.BLACK);
     wallLine.putTile(Tile.RED);
     assertEquals("WallLine should contain tiles we put on it in correct order," +
-            " according to tileTypes.", "RL", wallLine.state());
+            " according to tileTypes.", "R.L..", wallLine.state());
   }
 }

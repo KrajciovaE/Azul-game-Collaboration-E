@@ -176,7 +176,24 @@ public class BoardIntegrationTest {
 
         // First row is now full, which means end of game.
         assertEquals(FinishRoundResult.GAME_FINISHED, board.finishRound());
-        // The final points should be 33.
-        // assertEquals(33, board.getPoints().getValue());
+
+        expectedState = """
+                Pattern Lines:
+                .
+                ..
+                ...
+                ....
+                .....
+                Wall Lines:
+                BIRGL
+                LB...
+                GL...
+                R...I
+                .R..B
+                Floor:
+                                
+                Points[value=36]
+                """;
+        assertEquals(expectedState, board.state());
     }
 }

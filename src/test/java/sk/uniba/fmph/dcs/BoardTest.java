@@ -79,6 +79,10 @@ class FakeWallLine implements WallLineInterface {
 }
 
 class FakeFinalPointsCal implements FinalPointsCalculationInterface {
+    @Override
+    public Points getPoints(List<List<Optional<Tile>>> wall) {
+        return null;
+    }
 }
 
 class FakeGameFinished implements GameFinishedInterface {

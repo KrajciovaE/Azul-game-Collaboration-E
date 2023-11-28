@@ -54,7 +54,8 @@ public class FinalPointsCalcTest {
         wall.get(2).set(0, Optional.of(tiles.get(0)));
         wall.get(3).set(1, Optional.of(tiles.get(1)));
 
-        int points = FinalPointsCalculation.getPoints(wall).getValue();
+        FinalPointsCalculation finalPointsCalculation = new FinalPointsCalculation();
+        int points = finalPointsCalculation.getPoints(wall).getValue();
 
         // Assert that the points are as expected (2 points from HorizontalLineRule)
         assertEquals(2, points);
@@ -69,7 +70,8 @@ public class FinalPointsCalcTest {
         wall.get(3).set(0, Optional.of(tiles.get(3)));
         wall.get(4).set(0, Optional.of(tiles.get(4)));
 
-        int points = FinalPointsCalculation.getPoints(wall).getValue();
+        FinalPointsCalculation finalPointsCalculation = new FinalPointsCalculation();
+        int points = finalPointsCalculation.getPoints(wall).getValue();
 
         // Assert that the points are as expected (7 points from VerticalLineRule)
         assertEquals(7, points);
@@ -84,7 +86,8 @@ public class FinalPointsCalcTest {
         wall.get(3).set(3, Optional.of(tiles.get(0)));
         wall.get(4).set(4, Optional.of(tiles.get(0)));
 
-        int points = FinalPointsCalculation.getPoints(wall).getValue();
+        FinalPointsCalculation finalPointsCalculation = new FinalPointsCalculation();
+        int points = finalPointsCalculation.getPoints(wall).getValue();
 
         // Assert that the points are as expected (10 points from FullColorRule)
         assertEquals(10, points);
@@ -93,7 +96,8 @@ public class FinalPointsCalcTest {
     @Test
     public void testGetPointsWithEmptyWall() {
         // Set up an empty wall
-        int points = FinalPointsCalculation.getPoints(wall).getValue();
+        FinalPointsCalculation finalPointsCalculation = new FinalPointsCalculation();
+        int points = finalPointsCalculation.getPoints(wall).getValue();
 
         // Assert that the points are 0 for an empty wall
         assertEquals(0, points);

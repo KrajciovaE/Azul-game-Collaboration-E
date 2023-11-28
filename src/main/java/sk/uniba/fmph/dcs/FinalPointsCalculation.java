@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class FinalPointsCalculation implements FinalPointsCalculationInterface {
-    public static Points getPoints(List<List<Optional<Tile>>> wall){
+    @Override
+    public Points getPoints(List<List<Optional<Tile>>> wall){
         Horizontal horizontalLineRule = new Horizontal();
         Vertical verticalLineRule = new Vertical();
         Color fullColorRule = new Color();
@@ -15,4 +16,5 @@ public class FinalPointsCalculation implements FinalPointsCalculationInterface {
 
         return new Points(sum);
     }
+
 }

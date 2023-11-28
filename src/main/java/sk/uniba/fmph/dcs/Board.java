@@ -72,7 +72,7 @@ public class Board implements BoardInterface {
                 .map(WallLineInterface::getTiles) // Convert each WallLineInterface to List<Optional<Tile>>
                 .collect(Collectors.toList());
 
-        Points finalPoints = FinalPointsCalculationInterface.getPoints(wallTiles);
+        Points finalPoints = finalPointsCalculation.getPoints(wallTiles);
 
         // Add the final points to the points object
         points.add(finalPoints);

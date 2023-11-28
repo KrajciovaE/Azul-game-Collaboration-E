@@ -1,10 +1,12 @@
 package sk.uniba.fmph.dcs;
 
+import sk.uniba.fmph.dcs.interfaces.TableCenterInterface;
 import sk.uniba.fmph.dcs.interfaces.TileSourceInterface;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TableCenter implements TileSourceInterface {
+public class TableCenter implements TableCenterInterface {
     private ArrayList<Tile> tiles;
     private boolean isFirst;
 
@@ -13,7 +15,8 @@ public class TableCenter implements TileSourceInterface {
         isFirst = true;
     }
 
-    public void add(ArrayList<Tile> tiles) {
+    @Override
+    public void add(List<Tile> tiles) {
         this.tiles.addAll(tiles);
     }
 
