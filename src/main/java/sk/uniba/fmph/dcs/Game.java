@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Game implements GameInterface {
-    private TableAreaInterface tableArea;
-    private List<BoardInterface> allBoards;
-    private ObserverInterface gameObserver;
-    private int playerCount;
+    private final TableAreaInterface tableArea;
+    private final List<BoardInterface> allBoards;
+    private final ObserverInterface gameObserver;
+    private final int playerCount;
     private int currentPlayerId;
     private int startingPlayerId;
     boolean isGameOver;

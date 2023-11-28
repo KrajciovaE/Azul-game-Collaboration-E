@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TableCenter implements TableCenterInterface {
-    private ArrayList<Tile> tiles;
+    public ArrayList<Tile> tiles;           // For testing purposes.
     private boolean isFirst;
 
     public TableCenter() {

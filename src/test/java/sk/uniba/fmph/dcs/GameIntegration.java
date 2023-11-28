@@ -2,22 +2,19 @@ package sk.uniba.fmph.dcs;
 
 import org.junit.Before;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ArrayList;
-import org.junit.Before;
+import java.util.*;
+
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import sk.uniba.fmph.dcs.interfaces.*;
 
-import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.Assert.assertEquals;
 
+
 public class GameIntegration {
     private Game game;
-    private Bag bag;
+    private FakeBagGame bag;
     private TableArea tableArea;
     private ArrayList<TileSourceInterface> tileSources;
     private GameObserver gameObserver = new GameObserver();
@@ -40,7 +37,7 @@ public class GameIntegration {
         List<PatternLineInterface> patterLines;
         ArrayList<Points> pointPattern = new ArrayList<>(Arrays.asList(new Points(-1), new Points(-1), new Points(-2), new Points(-2), new Points(-2), new Points(-3), new Points(-3)));
         UsedTiles usedTiles = new UsedTiles();
-        bag = new Bag(usedTiles);
+        bag = new FakeBagGame(usedTiles);
 
         // Boards, points, wall lines, pattern lines
         for (int i = 0; i < playerCount; i++) {
@@ -118,222 +115,93 @@ public class GameIntegration {
 
     @Test
     public void testGamePlay() {
-        // I am trying to simulate game, because i have a real bag, i have no idea what is
 
         int c = 1;
-        boolean emptyBag = false;
-        while (!game.isGameOver) {
-            if (emptyBag) break;
 
-            System.out.println( c + ". round: \n" + tableArea.state() );
+        System.out.println( c + ". round: \n" + tableArea.state() );
 
+        game.take(game.getCurrentPlayerId(), 1, 0, 0);
+        game.take(game.getCurrentPlayerId(), 2, 0, 0);
 
-            // Player 1 is trying to fill the first wall line.
-            if (game.getCurrentPlayerId() == 1) {
-                // Red tile is not in first wall line and factory 1 has it.
-                if (!board1.getWall().get(0).state().contains("R") && factory1.tiles.contains(Tile.RED)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory1.tiles.get(i) == Tile.RED) {
-                            game.take(game.getCurrentPlayerId(), 1, i, 0);
-                        }
-                    }
-                }
-                // Blue tile is not in first wall line and factory 1 has it.
-                else if (!board1.getWall().get(0).state().contains("B") && factory1.tiles.contains(Tile.BLUE)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory1.tiles.get(i) == Tile.BLUE) {
-                            game.take(game.getCurrentPlayerId(), 1, i, 0);
-                        }
-                    }
-                }
-                // Black tile is not in first wall line and factory 1 has it.
-                else if (!board1.getWall().get(0).state().contains("L") && factory1.tiles.contains(Tile.BLACK)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory1.tiles.get(i) == Tile.BLACK) {
-                            game.take(game.getCurrentPlayerId(), 1, i, 0);
-                        }
-                    }
-                }
-                // Green tile is not in first wall line and factory 1 has it.
-                else if (!board1.getWall().get(0).state().contains("G") && factory1.tiles.contains(Tile.GREEN)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory1.tiles.get(i) == Tile.GREEN) {
-                            game.take(game.getCurrentPlayerId(), 1, i, 0);
-                        }
-                    }
-                }
-                // Yellow tile is not in first wall line and factory 1 has it.
-                else if (!board1.getWall().get(0).state().contains("I") && factory1.tiles.contains(Tile.YELLOW)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory1.tiles.get(i) == Tile.YELLOW) {
-                            game.take(game.getCurrentPlayerId(), 1, i, 0);
-                        }
-                    }
-                }
-                else game.take(game.getCurrentPlayerId(), 1, 0, 0);
-            }
+        game.take(game.getCurrentPlayerId(), 0, 1, 2);
+        game.take(game.getCurrentPlayerId(), 0, 0, 2);
 
+        game.take(game.getCurrentPlayerId(), 3, 0, 1);
+        game.take(game.getCurrentPlayerId(), 4, 0, 1);
 
-            // Player 2 is trying to do the same.
-            if (game.getCurrentPlayerId() == 2) {
-                // Red tile is not in first wall line and factory 2 has it.
-                if (!board2.getWall().get(0).state().contains("R") && factory2.tiles.contains(Tile.RED)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory2.tiles.get(i) == Tile.RED) {
-                            game.take(game.getCurrentPlayerId(), 2, i, 0);
-                        }
-                    }
-                }
-                // Blue tile is not in first wall line and factory 2 has it.
-                else if (!board2.getWall().get(0).state().contains("B") && factory2.tiles.contains(Tile.BLUE)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory2.tiles.get(i) == Tile.BLUE) {
-                            game.take(game.getCurrentPlayerId(), 2, i, 0);
-                        }
-                    }
-                }
-                // Black tile is not in first wall line and factory 2 has it.
-                else if (!board2.getWall().get(0).state().contains("L") && factory2.tiles.contains(Tile.BLACK)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory2.tiles.get(i) == Tile.BLACK) {
-                            game.take(game.getCurrentPlayerId(), 2, i, 0);
-                        }
-                    }
-                }
-                // Green tile is not in first wall line and factory 2 has it.
-                else if (!board2.getWall().get(0).state().contains("G") && factory2.tiles.contains(Tile.GREEN)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory2.tiles.get(i) == Tile.GREEN) {
-                            game.take(game.getCurrentPlayerId(), 2, i, 0);
-                        }
-                    }
-                }
-                // Yellow tile is not in first wall line and factory 2 has it.
-                else if (!board2.getWall().get(0).state().contains("I") && factory2.tiles.contains(Tile.YELLOW)) {
-                    for (int i = 0; i < 4; i++) {
-                        if (factory2.tiles.get(i) == Tile.YELLOW) {
-                            game.take(game.getCurrentPlayerId(), 2, i, 0);
-                        }
-                    }
-                }
-                else game.take(game.getCurrentPlayerId(), 2, 0, 0);
-            }
-            
-            for ( BoardInterface board : boards ) {
-                System.out.println(board.state());
-            }
-            c++;
+        game.take(game.getCurrentPlayerId(), 0, 0, 3);
+        game.take(game.getCurrentPlayerId(), 0, 0, 3);
 
-            assertTrue(factory1.isEmpty());
-            assertTrue(factory2.isEmpty());
+        game.take(game.getCurrentPlayerId(), 5, 0, 3);
+        game.take(game.getCurrentPlayerId(), 0, 0, 3);
 
-            System.out.println( c + ". round: \n" + tableArea.state() );
-
-            game.take(game.getCurrentPlayerId(), 3, 0, 1);
-            game.take(game.getCurrentPlayerId(), 4, 0, 1);
-            for ( BoardInterface board : boards ) {
-                System.out.println(board.state());
-            }
-            c++;
-
-            assertTrue(factory3.isEmpty());
-            assertTrue(factory4.isEmpty());
-
-            System.out.println( c + ". round: \n" + tableArea.state() );
-            c++;
-
-            game.take(game.getCurrentPlayerId(), 5, 0, 2);
-            if (tileSources.get(0).state().contains("S")) {
-                game.take(game.getCurrentPlayerId(), 0, 1, 2);
-            } else game.take(game.getCurrentPlayerId(), 0, 0, 2);
-
-            for ( BoardInterface board : boards ) {
-                System.out.println(board.state());
-            }
-
-            assertTrue(factory5.isEmpty());
-
-            System.out.println( c + ". round: \n" + tableArea.state() );
-            c++;
-
-            int index = 2;
-            int both = 0;
-            while (!tileSources.get(0).isEmpty() && !emptyBag) {
-                if (bag.isEmpty()) {
-                    emptyBag = true;
-                    break;
-                }
-
-                if (tileSources.get(0).state().length() == 1 && tileSources.get(0).state().contains("S")) break;
-
-                if (tileSources.get(0).state().contains("S")) {
-                    game.take(game.getCurrentPlayerId(), 0, 1, index);
-                }
-                else game.take(game.getCurrentPlayerId(), 0, 0, index);
-                both ++;
-                if (both % 2 == 0) {
-                    for ( BoardInterface board : boards ) {
-                        System.out.println(board.state());
-                    }
-                    System.out.println( c + ". round: \n" + tableArea.state() );
-                    c++;
-                    index ++;
-                    if (index == 5) index = 0;
-
-                }
-            }
-            if (emptyBag) {
-                System.out.println("Players are too dump, let's call it truce.");
-            }
-
+        for ( BoardInterface board : boards ) {
+            System.out.println(board.state());
         }
+        System.out.println(tableArea.state());
+        c++;
+
+        System.out.println( c + ". round: \n" + tableArea.state() );
+
+        game.take(game.getCurrentPlayerId(), 1, 0, 3);
+        game.take(game.getCurrentPlayerId(), 2, 0, 0);
+
+        game.take(game.getCurrentPlayerId(), 0, 1, 2);
+        game.take(game.getCurrentPlayerId(), 0, 0, 2);
+
+        game.take(game.getCurrentPlayerId(), 3, 0, 1);
+        game.take(game.getCurrentPlayerId(), 4, 0, 1);
+
+        game.take(game.getCurrentPlayerId(), 5, 3, 0);
+        game.take(game.getCurrentPlayerId(), 0, 0, 4);
+
+        game.take(game.getCurrentPlayerId(), 0, 0, 3);
+
+        for ( BoardInterface board : boards ) {
+            System.out.println(board.state());
+        }
+        System.out.println(tableArea.state());
+        c++;
+
+        System.out.println( c + ". round: \n" + tableArea.state() );
+
+        game.take(game.getCurrentPlayerId(), 2, 3, 0);
+        game.take(game.getCurrentPlayerId(), 3, 3, 0);
+
+        game.take(game.getCurrentPlayerId(), 5, 1, 3);
+        game.take(game.getCurrentPlayerId(), 4, 0, 3);
+
+        game.take(game.getCurrentPlayerId(), 0, 5, 2);
+        game.take(game.getCurrentPlayerId(), 0, 1, 1);
+
+        game.take(game.getCurrentPlayerId(), 1, 0, 1);
+        game.take(game.getCurrentPlayerId(), 0, 1, 4);
+
+        game.take(game.getCurrentPlayerId(), 0, 0, 4);
+
+        for ( BoardInterface board : boards ) {
+            System.out.println(board.state());
+        }
+        System.out.println(tableArea.state());
+        c++;
 
 
+        System.out.println( c + ". round: \n" + tableArea.state() );
+
+        game.take(game.getCurrentPlayerId(), 1, 0, 0);
+        game.take(game.getCurrentPlayerId(), 5, 3, 0);
+
+        game.take(game.getCurrentPlayerId(), 0, 4, 1);
+        game.take(game.getCurrentPlayerId(), 4, 3, 3);
+
+        for ( BoardInterface board : boards ) {
+            System.out.println(board.state());
+        }
+        System.out.println(tableArea.state());
+        c++;
 
     }
 
-    public void fillFirstWall(int currentPlayer, Board board, Factory factory, int source) {
-        // Red tile is not in first wall line and factory has it.
-        if (!board.getWall().get(0).state().contains("R") && factory.tiles.contains(Tile.RED)) {
-            for (int i = 0; i < 4; i++) {
-                if (factory.tiles.get(i) == Tile.RED) {
-                    game.take(currentPlayer, source, i, 0);
-                }
-            }
-        }
-        // Blue tile is not in first wall line and factory has it.
-        else if (!board.getWall().get(0).state().contains("B") && factory.tiles.contains(Tile.BLUE)) {
-            for (int i = 0; i < 4; i++) {
-                if (factory.tiles.get(i) == Tile.BLUE) {
-                    game.take(currentPlayer, source, i, 0);
-                }
-            }
-        }
-        // Black tile is not in first wall line and factory has it.
-        else if (!board.getWall().get(0).state().contains("L") && factory.tiles.contains(Tile.BLACK)) {
-            for (int i = 0; i < 4; i++) {
-                if (factory.tiles.get(i) == Tile.BLACK) {
-                    game.take(currentPlayer, source, i, 0);
-                }
-            }
-        }
-        // Green tile is not in first wall line and factory has it.
-        else if (!board.getWall().get(0).state().contains("G") && factory.tiles.contains(Tile.GREEN)) {
-            for (int i = 0; i < 4; i++) {
-                if (factory.tiles.get(i) == Tile.GREEN) {
-                    game.take(currentPlayer, source, i, 0);
-                }
-            }
-        }
-        // Yellow tile is not in first wall line and factory 1 has it.
-        else if (!board1.getWall().get(0).state().contains("I") && factory.tiles.contains(Tile.YELLOW)) {
-            for (int i = 0; i < 4; i++) {
-                if (factory.tiles.get(i) == Tile.YELLOW) {
-                    game.take(currentPlayer, source, i, 0);
-                }
-            }
-        }
-        else game.take(currentPlayer, source, 0, 0);
-    }
 
 }
+

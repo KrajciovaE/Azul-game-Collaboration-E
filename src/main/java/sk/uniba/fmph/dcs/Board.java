@@ -116,4 +116,8 @@ public class Board implements BoardInterface {
     public List<WallLineInterface> getWall() {
         return this.wallLines;
     }
+
+    public List<PatternLineInterface> getPatternLines() {
+        return  this.patternLines;
+    }
 }
