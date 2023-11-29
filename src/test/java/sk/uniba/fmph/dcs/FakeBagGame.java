@@ -75,10 +75,60 @@ public class FakeBagGame implements BagInterface {
         tiles.add(Tile.GREEN);
         tiles.add(Tile.BLUE);
 
+        // 1
         tiles.add(Tile.YELLOW);
         tiles.add(Tile.RED);
         tiles.add(Tile.YELLOW);
         tiles.add(Tile.BLUE);
+
+        // 2
+        tiles.add(Tile.RED);
+        tiles.add(Tile.BLACK);
+        tiles.add(Tile.BLACK);
+        tiles.add(Tile.BLACK);
+
+        // 3
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.GREEN);
+
+        // 4
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.BLUE);
+
+        // 5
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.BLUE);
+
+        // 1
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.GREEN);
+
+        // 2
+        tiles.add(Tile.RED);
+        tiles.add(Tile.BLACK);
+        tiles.add(Tile.BLACK);
+        tiles.add(Tile.BLACK);
+
+        // 3
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.GREEN);
+
+        // 4
+        tiles.add(Tile.YELLOW);
+        tiles.add(Tile.YELLOW);
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.BLUE);
+
 
     }
     @Override

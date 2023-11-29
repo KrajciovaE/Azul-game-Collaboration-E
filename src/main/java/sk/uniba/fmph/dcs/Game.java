@@ -21,8 +21,9 @@ public class Game implements GameInterface {
         this.gameObserver = gameObserver;
         this.playerCount = playerCount;
         this.isGameOver = false;
-        Random random = new Random();
-        startingPlayerId = random.nextInt(this.playerCount);
+        //Random random = new Random();
+        //startingPlayerId = random.nextInt(this.playerCount);
+        startingPlayerId = 0;       // For testing purposes.
         currentPlayerId = startingPlayerId;
         this.tableArea.startNewRound();
         gameObserver.notify("Game started");
@@ -42,6 +43,7 @@ public class Game implements GameInterface {
         if(tiles.contains(Tile.STARTING_PLAYER)) startingPlayerId = currentPlayerId;
 
         allBoards.get(playerId).put(destinationIdx, tiles);
+        gameObserver.notify(allBoards.get(playerId).state());
         if ( tableArea.isRoundEnd() ) {
             handleRoundEnd();
             if ( isGameOver ) return finish();
@@ -81,7 +83,7 @@ public class Game implements GameInterface {
         for (int i = 0; i < playerCount; i++)
         {
             int points = allBoards.get(i).getPoints().getValue();
-            gameObserver.notify("Player " + i + " finished with " + points + " points.");
+            gameObserver.notify("Player " + i  + " finished with " + points + " points.");
             if ( points > maxPoints ) {
                 maxPoints = points;
                 winnerPlayerId = i;

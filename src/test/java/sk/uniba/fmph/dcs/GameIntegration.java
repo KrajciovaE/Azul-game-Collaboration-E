@@ -20,14 +20,9 @@ public class GameIntegration {
     private GameObserver gameObserver = new GameObserver();
     private TableCenter tableCenter;
     ArrayList<BoardInterface> boards = new ArrayList<>();
-    private Factory factory1;
-    private Factory factory2;
-    private Factory factory3;
-    private Factory factory4;
-    private Factory factory5;
-
     private Board board1;
     private Board board2;
+    private NotifyMe notifyMe;
 
     @Before
     public void setUp() {
@@ -78,47 +73,29 @@ public class GameIntegration {
             FinalPointsCalculation finalPointsCalculation = new FinalPointsCalculation();
             GameFinished gameFinished = new GameFinished();
 
-            if (i == 0) {
-                board1 = new Board(floor, points, patternLines, wallLines, finalPointsCalculation, gameFinished);
-                boards.add(board1);
-            } else {
-                board2 = new Board(floor, points, patternLines, wallLines, finalPointsCalculation, gameFinished);
-                boards.add(board2);
-            }
-
+            boards.add(new Board(floor, points, patternLines, wallLines, finalPointsCalculation, gameFinished));
         }
 
         // Table area.
         tableCenter = new TableCenter();
         tileSources = new ArrayList<>();
         tileSources.add(tableCenter);
-        this.factory1 = new Factory(bag, tableCenter);
-        this.factory2 = new Factory(bag, tableCenter);
-        this.factory3 = new Factory(bag, tableCenter);
-        this.factory4 = new Factory(bag, tableCenter);
-        this.factory5 = new Factory(bag, tableCenter);
-        tileSources.add(factory1);
-        tileSources.add(factory2);
-        tileSources.add(factory3);
-        tileSources.add(factory4);
-        tileSources.add(factory5);
+        for (int j = 0; j < 5; j++) {
+            tileSources.add(new Factory(bag, tableCenter));
+        }
 
         tableArea = new TableArea(tileSources);
 
-        ObserverInterface observer = new GameObserver();
-        NotifyMe notifyMe = new NotifyMe();
+        notifyMe = new NotifyMe();
         gameObserver.registerObserver(notifyMe);
 
         // Set up the game with 2 players.
-        game = new Game(tableArea, boards, observer, playerCount);
+        game = new Game(tableArea, boards, gameObserver, playerCount);
+
     }
 
     @Test
     public void testGamePlay() {
-
-        int c = 1;
-
-        System.out.println( c + ". round: \n" + tableArea.state() );
 
         game.take(game.getCurrentPlayerId(), 1, 0, 0);
         game.take(game.getCurrentPlayerId(), 2, 0, 0);
@@ -135,14 +112,6 @@ public class GameIntegration {
         game.take(game.getCurrentPlayerId(), 5, 0, 3);
         game.take(game.getCurrentPlayerId(), 0, 0, 3);
 
-        for ( BoardInterface board : boards ) {
-            System.out.println(board.state());
-        }
-        System.out.println(tableArea.state());
-        c++;
-
-        System.out.println( c + ". round: \n" + tableArea.state() );
-
         game.take(game.getCurrentPlayerId(), 1, 0, 3);
         game.take(game.getCurrentPlayerId(), 2, 0, 0);
 
@@ -157,14 +126,6 @@ public class GameIntegration {
 
         game.take(game.getCurrentPlayerId(), 0, 0, 3);
 
-        for ( BoardInterface board : boards ) {
-            System.out.println(board.state());
-        }
-        System.out.println(tableArea.state());
-        c++;
-
-        System.out.println( c + ". round: \n" + tableArea.state() );
-
         game.take(game.getCurrentPlayerId(), 2, 3, 0);
         game.take(game.getCurrentPlayerId(), 3, 3, 0);
 
@@ -172,36 +133,38 @@ public class GameIntegration {
         game.take(game.getCurrentPlayerId(), 4, 0, 3);
 
         game.take(game.getCurrentPlayerId(), 0, 5, 2);
+        game.take(game.getCurrentPlayerId(), 1, 3, 4);
+
+        game.take(game.getCurrentPlayerId(), 0, 1, 1);
         game.take(game.getCurrentPlayerId(), 0, 1, 1);
 
-        game.take(game.getCurrentPlayerId(), 1, 0, 1);
-        game.take(game.getCurrentPlayerId(), 0, 1, 4);
+        game.take(game.getCurrentPlayerId(), 4, 0, 0);
+        game.take(game.getCurrentPlayerId(), 3, 3, 0);
 
+        game.take(game.getCurrentPlayerId(), 0, 1, 2);
+        game.take(game.getCurrentPlayerId(), 2, 3, 2);
+
+        game.take(game.getCurrentPlayerId(), 1, 1, 1);
+        game.take(game.getCurrentPlayerId(), 5, 0, -1);
+
+        game.take(game.getCurrentPlayerId(), 0, 1, 4);
         game.take(game.getCurrentPlayerId(), 0, 0, 4);
 
-        for ( BoardInterface board : boards ) {
-            System.out.println(board.state());
-        }
-        System.out.println(tableArea.state());
-        c++;
-
-
-        System.out.println( c + ". round: \n" + tableArea.state() );
+        game.take(game.getCurrentPlayerId(), 0, 0, 1);
 
         game.take(game.getCurrentPlayerId(), 1, 0, 0);
-        game.take(game.getCurrentPlayerId(), 5, 3, 0);
+        game.take(game.getCurrentPlayerId(), 5, 3, 3);
 
-        game.take(game.getCurrentPlayerId(), 0, 4, 1);
-        game.take(game.getCurrentPlayerId(), 4, 3, 3);
+        game.take(game.getCurrentPlayerId(), 3, 2, 1);
+        game.take(game.getCurrentPlayerId(), 4, 3, 0);
 
-        for ( BoardInterface board : boards ) {
-            System.out.println(board.state());
-        }
-        System.out.println(tableArea.state());
-        c++;
+        game.take(game.getCurrentPlayerId(), 0, 2, 4);
+        game.take(game.getCurrentPlayerId(), 2, 0, 1);
 
+        game.take(game.getCurrentPlayerId(), 0, 0, 3);
+        game.take(game.getCurrentPlayerId(), 0, 0, 4);
+
+        assertTrue(game.isGameOver);
     }
-
-
 }
 
